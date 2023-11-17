@@ -1,0 +1,36 @@
+name: Automatyczne Testowanie
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * 0' # Uruchom co niedzielę o północy
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install PyQt5 pyinstaller pytest
+        # Dodaj inne potrzebne paczki
+
+    - name: Run unit tests
+      run: pytest tests.py
+
+    - name: Build EXE
+      run: pyinstaller --onefile project.py
+
+    - name: Run application tests
+      run: python test_application.py
