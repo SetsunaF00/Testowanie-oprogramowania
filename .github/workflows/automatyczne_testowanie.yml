@@ -30,7 +30,7 @@ jobs:
       run: pytest tests.py
 
     - name: Build EXE
-      run: pyinstaller --onefile project.py
+      run: pyinstaller --onefile main.py
 
     - name: Run application tests
       run: python test_application.py
