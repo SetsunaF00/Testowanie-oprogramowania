@@ -26,14 +26,20 @@ class MyTestAutomation(unittest.TestCase):
         result = subprocess.check_output(command, shell=True, text=True)
         self.assertIn("Host Name", result)
 
+    import subprocess
+
     def test_system_info(self):
         try:
-            result = subprocess.check_output('python mytest_console.py system', shell=True, text=True)
-            print(result)  # Wyświetlenie wyniku dla lepszej diagnozy
-            self.assertIn("Informacje systemowe", result)  # Sprawdzenie, czy oczekiwany tekst jest obecny w wyniku
+            result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True,
+                                    check=True)
+            print(result.stdout)  # Wyświetlenie wyniku dla lepszej diagnozy
+            self.assertIn("Informacje systemowe",
+                          result.stdout)  # Sprawdzenie, czy oczekiwany tekst jest obecny w wyniku
         except subprocess.CalledProcessError as e:
             print(f"Błąd: {e}")
+            print(f"Output błędu: {e.stdout}")
             self.fail(f'Test failed with error: {e}')
+
 
 if __name__ == '__main__':
     unittest.main()
