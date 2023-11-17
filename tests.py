@@ -28,27 +28,31 @@ class MyTestAutomation(unittest.TestCase):
         result = subprocess.check_output(command, shell=True, text=True)
         self.assertIn("Host Name", result)
 
-    def test_system_info(self):
-        try:
-            # Run the function and capture the result
-            result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True, check=True)
+    class MyTestAutomation(unittest.TestCase):
 
-            # Decode the result using UTF-8
-            decoded_result = result.stdout.encode(sys.stdout.encoding, errors='replace').decode('utf-8', errors='replace')
+        def test_system_info(self):
+            try:
+                # Run the function and capture the result
+                result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True,
+                                        check=True)
 
-            # Print the decoded result
-            sys.stdout.write(decoded_result)
+                # Decode the result using UTF-8
+                decoded_result = result.stdout.encode('utf-8', errors='replace').decode(sys.stdout.encoding,
+                                                                                        errors='replace')
 
-            # Check if the expected text is present in the result
-            self.assertIn("Informacje systemowe", decoded_result)
+                # Print the decoded result
+                sys.stdout.write(decoded_result)
 
-        except subprocess.CalledProcessError as e:
-            # In case of an error, print error information
-            print(f"Błąd: {e}")
-            print(f"Output błędu: {e.stdout}")
-            print(f"Output stderr błędu: {e.stderr}")
-            # Fail the test
-            self.fail(f'Test failed with error: {e}')
+                # Check if the expected text is present in the result
+                self.assertIn("Informacje systemowe", decoded_result)
+
+            except subprocess.CalledProcessError as e:
+                # In case of an error, print error information
+                print(f"Błąd: {e}")
+                print(f"Output błędu: {e.stdout}")
+                print(f"Output stderr błędu: {e.stderr}")
+                # Fail the test
+                self.fail(f'Test failed with error: {e}')
 
 
 if __name__ == '__main__':
