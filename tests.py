@@ -27,9 +27,13 @@ class MyTestAutomation(unittest.TestCase):
         self.assertIn("Host Name", result)
 
     def test_system_info(self):
-        command = "python mytest_console.py system"
-        result = subprocess.check_output(command, shell=True, text=True)
-        self.assertIn("System", result)
+        try:
+            result = subprocess.check_output('python mytest_console.py system', shell=True, text=True)
+            print(result)  # Wyświetlenie wyniku dla lepszej diagnozy
+            self.assertIn("Informacje systemowe", result)  # Sprawdzenie, czy oczekiwany tekst jest obecny w wyniku
+        except subprocess.CalledProcessError as e:
+            print(f"Błąd: {e}")
+            self.fail(f'Test failed with error: {e}')
 
 if __name__ == '__main__':
     unittest.main()
