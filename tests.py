@@ -31,14 +31,10 @@ class MyTestAutomation(unittest.TestCase):
     def test_system_info(self):
         try:
             # Run the function and capture the result
-            result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True,
-                                    check=True)
-
-            # Encode the stdout using the system's default encoding
-            encoded_result = result.stdout.encode(sys.stdout.encoding, errors='replace')
+            result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True, check=True)
 
             # Decode the result using UTF-8
-            decoded_result = encoded_result.decode('utf-8', errors='replace')
+            decoded_result = result.stdout.encode(sys.stdout.encoding, errors='replace').decode('utf-8', errors='replace')
 
             # Print the decoded result
             sys.stdout.write(decoded_result)
