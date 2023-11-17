@@ -1,5 +1,7 @@
 import subprocess
 import unittest
+from mytest_console import get_system_info
+import sys
 
 class MyTestAutomation(unittest.TestCase):
 
@@ -26,21 +28,29 @@ class MyTestAutomation(unittest.TestCase):
         result = subprocess.check_output(command, shell=True, text=True)
         self.assertIn("Host Name", result)
 
-    import subprocess
 
-    import subprocess
 
     def test_system_info(self):
         try:
+            # Uruchamiamy funkcję i przechwytujemy wynik
             result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True,
                                     check=True)
-            print(result.stdout)  # Wyświetlenie wyniku dla lepszej diagnozy
-            self.assertIn("Informacje systemowe",
-                          result.stdout)  # Sprawdzenie, czy oczekiwany tekst jest obecny w wyniku
+
+            # Zapisujemy wynik do zmiennej
+            decoded_result = result.stdout.encode('cp1250').decode('utf-8')
+
+            # Wydrukuj zdekodowany wynik
+            sys.stdout.write(decoded_result)
+
+            # Sprawdzamy, czy oczekiwany tekst jest obecny w wyniku
+            self.assertIn("Informacje systemowe", decoded_result)
+
         except subprocess.CalledProcessError as e:
+            # W przypadku błędu, wypisujemy informacje o błędzie
             print(f"Błąd: {e}")
             print(f"Output błędu: {e.stdout}")
             print(f"Output stderr błędu: {e.stderr}")
+            # Kończymy test niepowodzeniem
             self.fail(f'Test failed with error: {e}')
 
 

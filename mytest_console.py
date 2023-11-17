@@ -36,11 +36,6 @@ def get_host_name():
     host_name = platform.node()
     print(f"Host Name: {host_name}")
 
-#def get_system_info():
-    # system_info = f"System: {platform.system()} {platform.release()}\n"
-    # system_info += f"Liczba rdzeni CPU: {psutil.cpu_count(logical=False)}\n"
-    # system_info += f"Pamięć RAM: {round(psutil.virtual_memory().total / (1024. ** 3), 2)} GB"
-    # print(f"Informacje systemowe: {system_info}")
 
 def get_system_info():
     system_info = f"System: {platform.system()} {platform.release()}\n"
@@ -56,9 +51,13 @@ def get_system_info():
     else:
         system_info += "Pamięć RAM: Niedostępna na tym systemie."
 
-    # Ustawiamy sys.stdout.encoding na unikodowe kodowanie znaków
-    sys.stdout.encoding = 'utf-8'
-    sys.stdout.write(f"Informacje systemowe: {system_info}\n")
+    # Zapisujemy wynik do zmiennej
+    result = f"Informacje systemowe: {system_info}\n"
+    # Dekodujemy wynik z cp1250 (może być inny, w zależności od systemu)
+    decoded_result = result.encode('cp1250').decode('utf-8')
+
+    # Wydrukuj zdekodowany wynik
+    sys.stdout.write(decoded_result)
 
 # Dodatkowe informacje, aby pomóc w zrozumieniu problemu
 print(f"Kodowanie znaków w sys.stdout: {sys.stdout.encoding}")
