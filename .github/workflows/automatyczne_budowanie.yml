@@ -27,7 +27,8 @@ jobs:
         # Dodaj inne potrzebne paczki
 
     - name: Build EXE
-      run: pyinstaller --onefile main.py
+      run: pyinstaller --onefile ./main.py --distpath ./dist
+
 
     - name: Upload EXE artifact
       uses: actions/upload-artifact@v2
