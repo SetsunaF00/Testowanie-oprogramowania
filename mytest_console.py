@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 import platform
 import subprocess
 import psutil
@@ -35,11 +36,17 @@ def get_host_name():
     host_name = platform.node()
     print(f"Host Name: {host_name}")
 
+#def get_system_info():
+    # system_info = f"System: {platform.system()} {platform.release()}\n"
+    # system_info += f"Liczba rdzeni CPU: {psutil.cpu_count(logical=False)}\n"
+    # system_info += f"Pamięć RAM: {round(psutil.virtual_memory().total / (1024. ** 3), 2)} GB"
+    # print(f"Informacje systemowe: {system_info}")
+
 def get_system_info():
     system_info = f"System: {platform.system()} {platform.release()}\n"
-    system_info += f"Liczba rdzeni CPU: {psutil.cpu_count(logical=False)}\n"
-    system_info += f"Pamięć RAM: {round(psutil.virtual_memory().total / (1024. ** 3), 2)} GB"
-    print(f"Informacje systemowe: {system_info}")
+    system_info += f"Liczba rdzeni CPU: {os.cpu_count()}\n"
+    system_info += f"Pamięć RAM: {round(os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES') / (1024. ** 3), 2)} GB"
+    sys.stdout.write(f"Informacje systemowe: {system_info}\n")
 
 def main():
     parser = argparse.ArgumentParser(description="Aplikacja do sprawdzania informacji o komputerze i połączeniu sieciowym")
