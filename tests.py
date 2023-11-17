@@ -28,6 +28,8 @@ class MyTestAutomation(unittest.TestCase):
 
     import subprocess
 
+    import subprocess
+
     def test_system_info(self):
         try:
             result = subprocess.run('python mytest_console.py system', shell=True, capture_output=True, text=True,
@@ -38,6 +40,7 @@ class MyTestAutomation(unittest.TestCase):
         except subprocess.CalledProcessError as e:
             print(f"Błąd: {e}")
             print(f"Output błędu: {e.stdout}")
+            print(f"Output stderr błędu: {e.stderr}")
             self.fail(f'Test failed with error: {e}')
 
 
