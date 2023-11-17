@@ -25,7 +25,6 @@ jobs:
       run: |
         pip install PyQt5 pyinstaller pytest
         pip install psutil
-        pip install -r requirements.txt
 
     - name: Run unit tests
       run: pytest tests.py
