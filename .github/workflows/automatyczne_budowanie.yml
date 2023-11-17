@@ -32,5 +32,5 @@ jobs:
     - name: Upload EXE artifact
       uses: actions/upload-artifact@v2
       with:
-        name: mytest1-exe
-        path: dist/project.exe
+        name: mytest1.exe
+        path: C:\Users\filip\OneDrive\Pulpit\mytest1.exe
