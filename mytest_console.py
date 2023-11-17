@@ -44,8 +44,17 @@ def get_host_name():
 
 def get_system_info():
     system_info = f"System: {platform.system()} {platform.release()}\n"
-    system_info += f"Liczba rdzeni CPU: {os.cpu_count()}\n"
-    system_info += f"Pamięć RAM: {round(os.sysconf('SC_PAGE_SIZE') * os.sysconf('SC_PHYS_PAGES') / (1024. ** 3), 2)} GB"
+    system_info += f"Liczba rdzeni CPU: {psutil.cpu_count(logical=False)}\n"
+
+    # Dodajemy obsługę różnych systemów operacyjnych
+    if platform.system() == 'Windows':
+        try:
+            system_info += f"Pamięć RAM: {round(psutil.virtual_memory().total / (1024. ** 3), 2)} GB"
+        except Exception as e:
+            system_info += f"Błąd pobierania informacji o pamięci RAM: {e}"
+    else:
+        system_info += "Pamięć RAM: Niedostępna na tym systemie."
+
     sys.stdout.write(f"Informacje systemowe: {system_info}\n")
 
 def main():
